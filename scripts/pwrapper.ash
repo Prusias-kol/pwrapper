@@ -86,3 +86,7 @@ boolean pwrapper() {
     print(get_property("_prusias_pwrapper_logInfo"));
     return false;
 }
+
+void main(string input) {
+    pwrapper();
+}
