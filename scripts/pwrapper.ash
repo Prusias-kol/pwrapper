@@ -60,9 +60,9 @@ boolean pwrapper() {
     if (retryAttemptsPref != "") {
         retryAttempts = retryAttemptsPref.to_int();
     }
-    int attempts = 0;
+    int attempts = 1;
 
-    while (attempts < retryAttempts) {
+    while (attempts <= retryAttempts) {
         print("PWRAPPER: Attempt " + attempts + " of " + retryAttempts);
         cli_execute(loopScript);
         if (get_property('thoth19_event_list').contains_text("end")) {
