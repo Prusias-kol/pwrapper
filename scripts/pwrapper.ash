@@ -8,15 +8,15 @@ prusias_pwrapper_loopScript - string
 prusias_pwrapper_retryAttempts - int
 prusias_pwrapper_failUnsetChoices - boolean
 
-_prusias_pwrapper_logInfo - string
+prusias_pwrapper_logInfo - string
 */
 
 void log_event(string event) {
-    string logInfo = get_property("_prusias_pwrapper_logInfo");
+    string logInfo = get_property("prusias_pwrapper_logInfo");
     if (logInfo == "") {
-        set_property("_prusias_pwrapper_logInfo", event + "||");
+        set_property("prusias_pwrapper_logInfo", event + "||");
     } else {
-        set_property("_prusias_pwrapper_logInfo", logInfo + event + "||");
+        set_property("prusias_pwrapper_logInfo", logInfo + event + "||");
     }
 }
 
@@ -33,13 +33,13 @@ void check_and_exit_choice() {
         if ( choice_num == "0" ) {
             print("PWRAPPER WARN: Recommend not setting manual control for pref " + "choiceAdventure" + choiceAdventure, "yellow");
             print("Log info");
-            print(get_property("_prusias_pwrapper_logInfo"));
+            print(get_property("prusias_pwrapper_logInfo"));
             abort( "PWRAPPER ERROR: Manual control for " + choiceAdventure);
         }
         if ( choice_num == "" ) {
             if (get_property("prusias_pwrapper_failUnsetChoices").to_boolean()) {
                 print("Log info");
-                print(get_property("_prusias_pwrapper_logInfo"));
+                print(get_property("prusias_pwrapper_logInfo"));
                 abort( "PWRAPPER ERROR: Unsupported choice adventure for pref " + "choiceAdventure" + choiceAdventure);
             } else {
                 print("PWRAPPER WARN: Unsupported choice adventure for pref " + "choiceAdventure" + choiceAdventure + ". Continuing.", "yellow");
@@ -60,6 +60,8 @@ void check_and_exit_combat() {
 }
 
 boolean pwrapper() {
+    // Empty log info at the start
+    set_property("prusias_pwrapper_logInfo", "");
     string loopScript = get_property("prusias_pwrapper_loopScript");
     if (loopScript == "") {
         loopScript = "ploop fullday";
@@ -98,7 +100,7 @@ boolean pwrapper() {
 
     print("PWRAPPER ERROR: Loop script failed after " + retryAttempts + " attempts.", "red");
     print("Log info");
-    print(get_property("_prusias_pwrapper_logInfo"));
+    print(get_property("prusias_pwrapper_logInfo"));
     return false;
 }
 
